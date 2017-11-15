@@ -7,6 +7,14 @@ MainWindow::MainWindow(QWidget *parent)
     createMenuBar(menuBar);
     setMenuBar(menuBar);
 
+    toolBar = new QToolBar("toolBar");
+    createToolBar(toolBar);
+    addToolBar(toolBar);
+
+    statusBar = new QStatusBar;
+    createStatusBar(statusBar);
+    setStatusBar(statusBar);
+
     QString icon = iconRoot + "/images/R.png";
     setWindowIcon(QIcon(icon));
     setWindowTitle("Routon V0.0.1");
@@ -17,16 +25,53 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::createStatusBar(QStatusBar *statusBar)
+{
+    statusBar->showMessage("ready");
+}
+
+void MainWindow::createToolBar(QToolBar *toolBar)
+{
+    QString iconDir=iconRoot + "/images/add.png";
+    toolBar->addAction(QIcon(iconDir),"Open project",this,SLOT(openProject()));
+
+    toolBar->addSeparator();
+
+    iconDir=iconRoot + "/images/textlog.png";
+    toolBar->addAction(QIcon(iconDir),"Open System Log Cache",this,SLOT(openSysLogCache()));
+
+    iconDir=iconRoot + "/images/clear.png";
+    toolBar->addAction(QIcon(iconDir),"Clear System Log Cache",this,SLOT(clearSysLogCache()));
+
+    iconDir=iconRoot + "/images/port.png";
+    toolBar->addAction(QIcon(iconDir),"Open Port",this,SLOT(openPort()));
+
+
+    toolBar->addSeparator();
+
+    iconDir=iconRoot + "/images/log.png";
+    toolBar->addAction(QIcon(iconDir),"Open Log File",this,SLOT(openLogFile()));
+
+    iconDir=iconRoot + "/images/search.png";
+    toolBar->addAction(QIcon(iconDir),"Search File",this,SLOT(findFile()));
+
+    iconDir=iconRoot + "/images/back.png";
+    toolBar->addAction(QIcon(iconDir),"Back",this,SLOT(back()));
+
+    iconDir=iconRoot + "/images/storage.png";
+    toolBar->addAction(QIcon(iconDir),"Storage Log File",this,SLOT(storageLogFile()));
+}
 
 void MainWindow::createMenuBar(QMenuBar *menuBar)
 {
     projectMenu = new QMenu(tr("&Project"));
     QString iconDir=iconRoot + "/images/add.png";
-    projectMenu->addAction(QIcon(iconDir),tr("&Open project"),this,SLOT(openProject()));
+    projectMenu->addAction(QIcon(iconDir),tr("&Open project(O)"),\
+                           this,SLOT(openProject()),QKeySequence(tr("Ctrl+O")));
     iconDir=iconRoot + "/images/close1.png";
     projectMenu->addAction(QIcon(iconDir),tr("&Close project"),this,SLOT(closeProject()));
     projectMenu->addSeparator();
-    projectMenu->addAction(tr("&Exit"),this,SLOT(exitApplication()));
+    projectMenu->addAction(tr("&Exit"),this,SLOT(exitApplication()),QKeySequence(tr("Ctrl+W")));
 
 
     logSourceMenu = new QMenu("&Log Source");
@@ -53,6 +98,10 @@ void MainWindow::createMenuBar(QMenuBar *menuBar)
     toolMenu->addSeparator();
     iconDir=iconRoot + "/images/storage.png";
     toolMenu->addAction(QIcon(iconDir),tr("Storage Log File"),this,SLOT(storageLogFile()));
+    toolMenu->addSeparator();
+    iconDir=iconRoot + "/images/port.png";
+    toolMenu->addAction(QIcon(iconDir),tr("Open Port"),this,SLOT(openPort()));
+    toolMenu->addAction(tr("Close Port"),this,SLOT(closePort()));
 
 
     helpMenu = new QMenu(tr("&Help"));
@@ -66,6 +115,16 @@ void MainWindow::createMenuBar(QMenuBar *menuBar)
     menuBar->addMenu(viewMenu);
     menuBar->addMenu(toolMenu);
     menuBar->addMenu(helpMenu);
+}
+
+void MainWindow::openPort()
+{
+    qDebug()<<"openPort!"<<endl;
+}
+
+void MainWindow::closePort()
+{
+    qDebug()<<"closePort!"<<endl;
 }
 
 void MainWindow::InfoOFThisApp()

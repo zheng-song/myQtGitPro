@@ -26,9 +26,14 @@ private:
     QMenu *helpMenu;
 
     QMenuBar *menuBar;
+    QToolBar *toolBar;
+    QStatusBar *statusBar;
+
     const QString iconRoot =QDir::currentPath();
 
     void createMenuBar(QMenuBar *menuBar);
+    void createToolBar(QToolBar *toolBar);
+    void createStatusBar(QStatusBar *statusBar);
 
 private slots:
     void openProject();
@@ -43,6 +48,8 @@ private slots:
     void findFile();
     void back();
     void storageLogFile();
+    void openPort();
+    void closePort();
 
     void InfoOFThisApp();
 };
