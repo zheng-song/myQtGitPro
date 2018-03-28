@@ -12,7 +12,11 @@ LOGINWINDOW::LOGINWINDOW(QWidget *parent)
     :QWidget(parent)
 {
     nameEdit = new QLineEdit();
+    nameEdit->setEchoMode(QLineEdit::Normal);
+    nameEdit->setClearButtonEnabled(true);
     passwdEdit = new QLineEdit();
+    passwdEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+    passwdEdit->setClearButtonEnabled(true);
 
     nameLabel = new QLabel(tr("user Name:"));
 //    nameLabel->setTextFormat(Qt::PlainText);
@@ -25,6 +29,8 @@ LOGINWINDOW::LOGINWINDOW(QWidget *parent)
 
     loginBt = new QPushButton();
     loginBt->setText(tr("登入"));
+    this->loginBt->setFocus();
+    this->loginBt->setDefault(true);
     cancelBt = new QPushButton();
     cancelBt->setText(tr("取消"));
 
